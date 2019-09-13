@@ -8,8 +8,8 @@ const port = 4000
 const miniOutlook = nodemailer.createTransport({
 	host : "smtp.gmail.com",
 	auth : {
-		user : "micorreo@gmail.com",
-		pass : "miclavesuperrecontrasecreta",
+		user : "lord.silvious@gmail.com",
+		pass : "vgfgnqqeifywhrft",
 		port : 465
 	}
 })
@@ -35,11 +35,21 @@ http.createServer((request, response) => {
 
 				console.log(objeto)
 
+				let cuerpo = `<h1>Contacto desde EANT Mailer</h1>`
+						   + `<p>Datos del consultante:</p>`
+						   + `<p>Nombre: ${objeto.nombre}</p>`
+						   + `<p>E-Mail: ${objeto.correo}</p>`
+						   + `<p>Asunto: ${objeto.asunto}</p>`
+						   + `<p>Mensaje:</p>`
+						   + `<blockquote>${objeto.mensaje}</blockquote>`
+
 				miniOutlook.sendMail({
 					from : objeto.correo,
 					to : "silvio.messina@eant.tech",
+					replyTo : objeto.correo,
 					subject : objeto.asunto,
-					text : objeto.mensaje
+					//text : objeto.mensaje
+					html : cuerpo
 				})
 				
 				response.end("Miren la consola!")
